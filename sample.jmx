@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.4" jmeter="2.9 r1437961">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Sample WebSocket Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">2</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">3</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">3</stringProp>
+        <longProp name="ThreadGroup.start_time">1317039020000</longProp>
+        <longProp name="ThreadGroup.end_time">1317042620000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration">5</stringProp>
+        <stringProp name="ThreadGroup.delay">1</stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Loop Counter" enabled="true">
+          <stringProp name="CounterConfig.start">1</stringProp>
+          <stringProp name="CounterConfig.end">2</stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">l</stringProp>
+          <stringProp name="CounterConfig.format"></stringProp>
+          <boolProp name="CounterConfig.per_user">true</boolProp>
+        </CounterConfig>
+        <hashTree/>
+        <ua.ardas.jmeter.websocket.WebSocketConnectionController guiclass="ua.ardas.jmeter.websocket.WebSocketConnectionControllerGui" testclass="ua.ardas.jmeter.websocket.WebSocketConnectionController" testname="WebSocket Connection Controller" enabled="true">
+          <stringProp name="WebSocketConnectionController.domain">localhost</stringProp>
+          <stringProp name="WebSocketConnectionController.path">/somepath</stringProp>
+          <stringProp name="WebSocketConnectionController.port">8080</stringProp>
+          <stringProp name="WebSocketConnectionController.protocol">ws</stringProp>
+          <stringProp name="WebSocketConnectionController.contentEncoding">utf-8</stringProp>
+          <elementProp name="WebSocketConnectionController.arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="someTestParam" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">someTestValue</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">someTestParam</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </ua.ardas.jmeter.websocket.WebSocketConnectionController>
+        <hashTree>
+          <ua.ardas.jmeter.websocket.WebSocketMessageChecker guiclass="ua.ardas.jmeter.websocket.WebSocketMessageCheckerGui" testclass="ua.ardas.jmeter.websocket.WebSocketMessageChecker" testname="Check Messages Received After Connection Opened" enabled="true">
+            <stringProp name="WebSocketConnectionController.recvMessage">.*someMessage.*</stringProp>
+            <stringProp name="WebSocketConnectionController.recvTimeout">10000</stringProp>
+            <stringProp name="WebSocketConnectionController.recvMessageCheckType">ALL</stringProp>
+            <stringProp name="WebSocketConnectionController.recvMessageCount"></stringProp>
+          </ua.ardas.jmeter.websocket.WebSocketMessageChecker>
+          <hashTree/>
+          <ua.ardas.jmeter.websocket.WebSocketWaiter guiclass="ua.ardas.jmeter.websocket.WebSocketWaiterGui" testclass="ua.ardas.jmeter.websocket.WebSocketWaiter" testname="Wait Until All Threads Check Connection Message" enabled="true">
+            <stringProp name="WebSocketConnectionController.threads">3</stringProp>
+            <stringProp name="WebSocketConnectionController.key">someKey_${l}</stringProp>
+            <stringProp name="WebSocketConnectionController.timeout">10000</stringProp>
+          </ua.ardas.jmeter.websocket.WebSocketWaiter>
+          <hashTree/>
+          <ua.ardas.jmeter.websocket.WebSocketMessageSender guiclass="ua.ardas.jmeter.websocket.WebSocketMessageSenderGui" testclass="ua.ardas.jmeter.websocket.WebSocketMessageSender" testname="Send Some Message To Server" enabled="true">
+            <stringProp name="WebSocketConnectionController.sendMessage">message body</stringProp>
+          </ua.ardas.jmeter.websocket.WebSocketMessageSender>
+          <hashTree/>
+          <ua.ardas.jmeter.websocket.WebSocketMessageChecker guiclass="ua.ardas.jmeter.websocket.WebSocketMessageCheckerGui" testclass="ua.ardas.jmeter.websocket.WebSocketMessageChecker" testname="Check Received Messages count and content" enabled="true">
+            <stringProp name="WebSocketConnectionController.recvMessage">.*thisTextShouldBeInEachMessage.*</stringProp>
+            <stringProp name="WebSocketConnectionController.recvTimeout">20000</stringProp>
+            <stringProp name="WebSocketConnectionController.recvMessageCheckType">EACH</stringProp>
+            <stringProp name="WebSocketConnectionController.recvMessageCount">3</stringProp>
+          </ua.ardas.jmeter.websocket.WebSocketMessageChecker>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>true</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
