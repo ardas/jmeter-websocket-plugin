@@ -69,6 +69,7 @@ public class WebSocketConnectionController extends GenericController implements 
 	private void openConnection() {
 		try {
 			WebSocketClient webSocketClient = webSocketClientFactory.newWebSocketClient();
+            webSocketClient.setMaxTextMessageSize(65536);
 			Future<Connection> futureConnection = webSocketClient.open(getUri(), this);
 			connection = futureConnection.get();
 		} catch (Exception e) {
