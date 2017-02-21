@@ -9,7 +9,7 @@
     <version>1.2-SNAPSHOT</version>
 
     <properties>
-        <jmeterVersion>2.9</jmeterVersion>
+        <jmeterVersion>3.1</jmeterVersion>
         <jettyVersion>8.1.9.v20130131</jettyVersion>
     </properties>
 
@@ -34,4 +34,27 @@
             <version>${jettyVersion}</version>
         </dependency>
     </dependencies>
+
+ <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
 </project>
